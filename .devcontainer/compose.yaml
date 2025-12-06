@@ -1,0 +1,21 @@
+name: ddd_sample
+services:
+  app:
+    build:
+      context: ..
+      dockerfile: .devcontainer/app.Dockerfile
+    command: sleep infinity
+    volumes:
+      - ..:/workspace
+    ports:
+      - "8080:8080"
+  db:
+    image: postgres:17
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: db
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./init_db:/docker-entrypoint-initdb.d

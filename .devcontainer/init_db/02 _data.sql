@@ -1,0 +1,1 @@
+COPY users (id, nickname) FROM '/docker-entrypoint-initdb.d/csv/users.csv' WITH (FORMAT csv, HEADER true, ENCODING 'UTF8');
