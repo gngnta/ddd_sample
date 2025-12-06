@@ -11,7 +11,8 @@
                 "vscjava.vscode-lombok",
                 "ckolkman.vscode-postgres",
                 "oderwat.indent-rainbow",
-                "mechatroner.rainbow-csv"
+                "mechatroner.rainbow-csv",
+                "bierner.markdown-mermaid"
             ],
             "settings": {
                 "editor.formatOnSave": true,
