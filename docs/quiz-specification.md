@@ -89,26 +89,26 @@ erDiagram
     QUESTION_CHOICE ||--o{ ANSWER : ""
 
     CATEGORY {
-        long category_id PK
+        long id PK
         string name
         string description
     }
 
     QUESTION {
-        long question_id PK
+        long id PK
         long category_id FK
         string question_text
     }
 
     QUESTION_CHOICE {
-        long choice_id PK
+        long id PK
         long question_id FK
         string choice_text
         boolean is_correct
     }
 
     ATTEMPT {
-        long attempt_id PK
+        long id PK
         long category_id FK
         int total_questions
         int correct_count
@@ -117,7 +117,7 @@ erDiagram
     }
 
     ANSWER {
-        long answer_id PK
+        long id PK
         long attempt_id FK
         long question_id FK
         long choice_id FK
@@ -128,22 +128,22 @@ erDiagram
 ### 5.2 主要カラム説明
 
 **CATEGORY**
-- `category_id`: カテゴリーの一意識別子
+- `id`: カテゴリーの一意識別子
 - `name`: カテゴリー名
 
 **QUESTION**
-- `question_id`: 問題の一意識別子
+- `id`: 問題の一意識別子
 - `category_id`: 所属するカテゴリー
 - `question_text`: 問題文
 
 **QUESTION_CHOICE**
-- `choice_id`: 選択肢の一意識別子
+- `id`: 選択肢の一意識別子
 - `question_id`: 所属する問題
 - `choice_text`: 選択肢テキスト
 - `is_correct`: 正解かどうか（true = 正解、false = 不正解）
 
 **ATTEMPT**
-- `attempt_id`: 挑戦の一意識別子（自動採番）
+- `id`: 挑戦の一意識別子（自動採番）
 - `category_id`: 挑戦するカテゴリー
 - `total_questions`: 出題問題数
 - `correct_count`: 正解数
@@ -151,12 +151,12 @@ erDiagram
 - `completed_at`: 挑戦完了時刻（null = 進行中、値あり = 完了）
 
 **ANSWER**
-- `answer_id`: 回答の一意識別子
+- `id`: 回答の一意識別子
 - `attempt_id`: 所属する挑戦
 - `question_id`: 回答した問題
 - `choice_id`: ユーザーが選んだ選択肢
 - `answered_at`: 回答時刻
-  - 正誤判定は `choice_id` で参照する `QUESTION_CHOICE.is_correct` から取得
+    - 正誤判定は `choice_id` で参照する `QUESTION_CHOICE.is_correct` から取得
 
 ## 6. API仕様（概要）
 
