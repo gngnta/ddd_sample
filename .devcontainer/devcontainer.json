@@ -12,7 +12,8 @@
                 "ckolkman.vscode-postgres",
                 "oderwat.indent-rainbow",
                 "mechatroner.rainbow-csv",
-                "bierner.markdown-mermaid"
+                "bierner.markdown-mermaid",
+                "42Crunch.vscode-openapi"
             ],
             "settings": {
                 "editor.formatOnSave": true,
