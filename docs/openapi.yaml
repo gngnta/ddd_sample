@@ -1,0 +1,251 @@
+openapi: 3.0.3
+info:
+  title: Quiz API
+  version: 1.0.0
+paths:
+  /api/categories:
+    get:
+      responses:
+        "200":
+          description: List of categories
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Category"
+  /api/attempts:
+    get:
+      responses:
+        "200":
+          description: Attempt list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/AttemptSummary"
+    post:
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StartAttemptRequest"
+      responses:
+        "201":
+          description: Attempt started
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Attempt"
+  /api/attempts/{attemptId}/question:
+    get:
+      parameters:
+        - in: path
+          name: attemptId
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Next question
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NextQuestionResponse"
+        "204":
+          description: No remaining questions (attempt completed)
+  /api/attempts/{attemptId}/answers:
+    get:
+      parameters:
+        - in: path
+          name: attemptId
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Answer history
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/AnswerDetail"
+    post:
+      parameters:
+        - in: path
+          name: attemptId
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SubmitAnswerRequest"
+      responses:
+        "201":
+          description: Answer stored
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Answer"
+  /api/attempts/{attemptId}/result:
+    get:
+      parameters:
+        - in: path
+          name: attemptId
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Final attempt result
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AttemptResult"
+components:
+  schemas:
+    Category:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+    StartAttemptRequest:
+      type: object
+      properties:
+        categoryId:
+          type: integer
+        totalQuestions:
+          type: integer
+    Attempt:
+      type: object
+      properties:
+        id:
+          type: integer
+        categoryId:
+          type: integer
+        totalQuestions:
+          type: integer
+        correctCount:
+          type: integer
+        status:
+          type: string
+          enum: [in_progress, completed]
+        createdAt:
+          type: string
+          format: date-time
+        completedAt:
+          type: string
+          format: date-time
+    AttemptSummary:
+      type: object
+      properties:
+        id:
+          type: integer
+        categoryId:
+          type: integer
+        totalQuestions:
+          type: integer
+        correctCount:
+          type: integer
+        status:
+          type: string
+          enum: [in_progress, completed]
+        createdAt:
+          type: string
+          format: date-time
+        completedAt:
+          type: string
+          format: date-time
+    Question:
+      type: object
+      properties:
+        id:
+          type: integer
+        categoryId:
+          type: integer
+        questionText:
+          type: string
+        choices:
+          type: array
+          items:
+            $ref: "#/components/schemas/QuestionChoice"
+    QuestionChoice:
+      type: object
+      properties:
+        id:
+          type: integer
+        questionId:
+          type: integer
+        choiceText:
+          type: string
+    NextQuestionResponse:
+      type: object
+      properties:
+        attemptId:
+          type: integer
+        question:
+          $ref: "#/components/schemas/Question"
+    SubmitAnswerRequest:
+      type: object
+      properties:
+        questionId:
+          type: integer
+        choiceId:
+          type: integer
+    Answer:
+      type: object
+      properties:
+        id:
+          type: integer
+        attemptId:
+          type: integer
+        questionId:
+          type: integer
+        choiceId:
+          type: integer
+        isCorrect:
+          type: boolean
+        answeredAt:
+          type: string
+          format: date-time
+    AnswerDetail:
+      type: object
+      properties:
+        answerId:
+          type: integer
+        questionId:
+          type: integer
+        questionText:
+          type: string
+        choiceId:
+          type: integer
+        choiceText:
+          type: string
+        isCorrect:
+          type: boolean
+        answeredAt:
+          type: string
+    AttemptResult:
+      type: object
+      properties:
+        attemptId:
+          type: integer
+        categoryId:
+          type: integer
+        totalQuestions:
+          type: integer
+        correctCount:
+          type: integer
+        completedAt:
+          type: string
+          format: date-time
