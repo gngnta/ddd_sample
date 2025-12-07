@@ -31,5 +31,5 @@ CREATE TABLE answers (
 	attempt_id BIGINT NOT NULL REFERENCES attempts(id) ON DELETE CASCADE,
 	question_id BIGINT NOT NULL REFERENCES questions(id),
 	choice_id BIGINT NOT NULL REFERENCES question_choices(id),
-	answered_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+	answered_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
