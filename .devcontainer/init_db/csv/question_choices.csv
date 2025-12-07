@@ -1,0 +1,37 @@
+id,question_id,choice_text,is_correct
+1,1,5,true
+2,1,6,false
+3,1,4,false
+4,1,23,false
+5,2,36,false
+6,2,40,false
+7,2,42,true
+8,2,48,false
+9,3,90度,true
+10,3,45度,false
+11,3,60度,false
+12,3,120度,false
+13,4,Treble clef,true
+14,4,Bass clef,false
+15,4,Alto clef,false
+16,4,Tenor clef,false
+17,5,1,true
+18,5,2,false
+19,5,0.5,false
+20,5,4,false
+21,6,7,true
+22,6,6,false
+23,6,8,false
+24,6,5,false
+25,7,H2O,true
+26,7,CO2,false
+27,7,O2,false
+28,7,NaCl,false
+29,8,3,true
+30,8,2,false
+31,8,4,false
+32,8,5,false
+33,9,2,true
+34,9,1,false
+35,9,3,false
+36,9,4,false
