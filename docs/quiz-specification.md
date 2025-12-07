@@ -166,7 +166,7 @@ erDiagram
 GET    /api/categories                      # カテゴリー一覧取得
 POST   /api/attempts/start                  # 挑戦開始
 GET    /api/attempts/{attemptId}/question   # 次の問題取得
-POST   /api/attempts/{attemptId}/answers    # 回答送信
+POST   /api/attempts/{attemptId}/answer     # 回答送信
 GET    /api/attempts/{attemptId}/result     # 挑戦結果取得
 GET    /api/attempts                        # 挑戦一覧取得
 GET    /api/attempts/{attemptId}/answers    # 挑戦の回答履歴取得
