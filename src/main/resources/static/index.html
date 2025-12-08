@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quiz API Simple Client</title>
+    <link rel="stylesheet" href="./style.css" />
+</head>
+
+<body>
+    <h1>Quiz API Simple Client</h1>
+
+    <section>
+        <h2>Base URL</h2>
+        <div class="row">
+            <label for="baseUrl">例: http://localhost:8080</label>
+            <input id="baseUrl" type="text" value="" placeholder="空なら相対パス" style="min-width: 260px;" />
+        </div>
+    </section>
+
+    <section>
+        <h2>Categories</h2>
+        <div class="row" style="margin-bottom:8px;">
+            <button onclick="loadCategories()">GET /api/categories</button>
+            <span class="small">レスポンスを下に表示します。</span>
+        </div>
+        <pre id="categoriesOut">(未取得)</pre>
+    </section>
+
+    <section>
+        <h2>Start Attempt</h2>
+        <label for="startCategoryId">category_id</label>
+        <input id="startCategoryId" type="number" placeholder="カテゴリID" />
+        <div class="row" style="margin-top:8px;">
+            <button onclick="startAttempt()">POST /api/attempts/start</button>
+        </div>
+        <pre id="startOut">(未実行)</pre>
+    </section>
+
+    <section>
+        <h2>Next Question</h2>
+        <label for="attemptIdNext">attempt_id</label>
+        <input id="attemptIdNext" type="number" placeholder="試行ID" />
+        <div class="row" style="margin-top:8px;">
+            <button onclick="nextQuestion()">GET /api/attempts/{id}/question</button>
+        </div>
+        <pre id="nextOut">(未実行)</pre>
+    </section>
+
+    <section>
+        <h2>Submit Answer</h2>
+        <label for="attemptIdAnswer">attempt_id</label>
+        <input id="attemptIdAnswer" type="number" placeholder="試行ID" />
+        <label for="questionIdAnswer">question_id</label>
+        <input id="questionIdAnswer" type="number" placeholder="質問ID" />
+        <label for="choiceIdAnswer">choice_id</label>
+        <input id="choiceIdAnswer" type="number" placeholder="選択肢ID" />
+        <div class="row" style="margin-top:8px;">
+            <button onclick="submitAnswer()">POST /api/attempts/{id}/answer</button>
+        </div>
+        <pre id="answerOut">(未実行)</pre>
+    </section>
+
+    <section>
+        <h2>Result</h2>
+        <label for="attemptIdResult">attempt_id</label>
+        <input id="attemptIdResult" type="number" placeholder="試行ID" />
+        <div class="row" style="margin-top:8px;">
+            <button onclick="getResult()">GET /api/attempts/{id}/result</button>
+        </div>
+        <pre id="resultOut">(未実行)</pre>
+    </section>
+
+    <section>
+        <h2>Attempt List</h2>
+        <div class="row" style="margin-bottom:8px;">
+            <button onclick="listAttempts()">GET /api/attempts</button>
+        </div>
+        <pre id="listOut">(未取得)</pre>
+    </section>
+
+    <section>
+        <h2>Answer History</h2>
+        <label for="attemptIdAnswers">attempt_id</label>
+        <input id="attemptIdAnswers" type="number" placeholder="試行ID" />
+        <div class="row" style="margin-top:8px;">
+            <button onclick="listAnswers()">GET /api/attempts/{id}/answers</button>
+        </div>
+        <pre id="answersOut">(未取得)</pre>
+    </section>
+
+    <script src="./app.js" defer></script>
+</body>
+
+</html>
