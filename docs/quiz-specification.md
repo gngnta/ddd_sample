@@ -160,16 +160,19 @@ erDiagram
 
 ## 6. API仕様（概要）
 
+OpenAPI 定義: `docs/openapi.yaml`
+
+
 ### 6.1 RESTエンドポイント
 
 ```
 GET    /api/categories                      # カテゴリー一覧取得
 POST   /api/attempts/start                  # 挑戦開始
-GET    /api/attempts/{attempt_id}/question   # 次の問題取得
-POST   /api/attempts/{attempt_id}/answer     # 回答送信
-GET    /api/attempts/{attempt_id}/result     # 挑戦結果取得
+GET    /api/attempts/{attempt_id}/question  # 次の問題取得
+POST   /api/attempts/{attempt_id}/answer    # 回答送信
+GET    /api/attempts/{attempt_id}/result    # 挑戦結果取得
 GET    /api/attempts                        # 挑戦一覧取得
-GET    /api/attempts/{attempt_id}/answers    # 挑戦の回答履歴取得
+GET    /api/attempts/{attempt_id}/answers   # 挑戦の回答履歴取得
 ```
 
 ## 7. ビジネスロジック
