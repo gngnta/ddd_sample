@@ -131,28 +131,28 @@ components:
     StartAttemptRequest:
       type: object
       properties:
-        categoryId:
+        category_id:
           type: integer
     Attempt:
       type: object
       properties:
         id:
           type: integer
-        categoryId:
+        category_id:
           type: integer
-        totalQuestions:
+        total_questions:
           type: integer
-        correctCount:
+        correct_count:
           type: integer
         status:
           type: string
           enum: [in_progress, completed]
         passed:
           type: boolean
-        createdAt:
+        created_at:
           type: string
           format: date-time
-        completedAt:
+        completed_at:
           type: string
           format: date-time
     AttemptSummary:
@@ -160,23 +160,23 @@ components:
       properties:
         id:
           type: integer
-        categoryId:
+        category_id:
           type: integer
-        categoryName:
+        category_name:
           type: string
-        totalQuestions:
+        total_questions:
           type: integer
-        correctCount:
+        correct_count:
           type: integer
         status:
           type: string
           enum: [in_progress, completed]
         passed:
           type: boolean
-        createdAt:
+        created_at:
           type: string
           format: date-time
-        completedAt:
+        completed_at:
           type: string
           format: date-time
     Question:
@@ -184,9 +184,9 @@ components:
       properties:
         id:
           type: integer
-        categoryId:
+        category_id:
           type: integer
-        questionText:
+        question_text:
           type: string
         choices:
           type: array
@@ -197,71 +197,71 @@ components:
       properties:
         id:
           type: integer
-        questionId:
+        question_id:
           type: integer
-        choiceText:
+        choice_text:
           type: string
     NextQuestionResponse:
       type: object
       properties:
-        attemptId:
+        attempt_id:
           type: integer
         question:
           $ref: "#/components/schemas/Question"
     SubmitAnswerRequest:
       type: object
       properties:
-        questionId:
+        question_id:
           type: integer
-        choiceId:
+        choice_id:
           type: integer
     Answer:
       type: object
       properties:
         id:
           type: integer
-        attemptId:
+        attempt_id:
           type: integer
-        questionId:
+        question_id:
           type: integer
-        choiceId:
+        choice_id:
           type: integer
-        isCorrect:
+        is_correct:
           type: boolean
-        answeredAt:
+        answered_at:
           type: string
           format: date-time
     AnswerDetail:
       type: object
       properties:
-        answerId:
+        answer_id:
           type: integer
-        questionId:
+        question_id:
           type: integer
-        questionText:
+        question_text:
           type: string
-        choiceId:
+        choice_id:
           type: integer
-        choiceText:
+        choice_text:
           type: string
-        isCorrect:
+        is_correct:
           type: boolean
-        answeredAt:
+        answered_at:
           type: string
           format: date-time
     AttemptResult:
       type: object
       properties:
-        attemptId:
+        attempt_id:
           type: integer
-        categoryId:
+        category_id:
           type: integer
-        categoryName:
+        category_name:
           type: string
-        totalQuestions:
+        total_questions:
           type: integer
-        correctCount:
+        correct_count:
           type: integer
-        completedAt:
+        completed_at:
           type: string
           format: date-time
