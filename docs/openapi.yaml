@@ -162,6 +162,8 @@ components:
           type: integer
         categoryId:
           type: integer
+        categoryName:
+          type: string
         totalQuestions:
           type: integer
         correctCount:
@@ -246,6 +248,7 @@ components:
           type: boolean
         answeredAt:
           type: string
+          format: date-time
     AttemptResult:
       type: object
       properties:
@@ -253,6 +256,8 @@ components:
           type: integer
         categoryId:
           type: integer
+        categoryName:
+          type: string
         totalQuestions:
           type: integer
         correctCount:
