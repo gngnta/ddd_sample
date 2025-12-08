@@ -5,6 +5,7 @@ info:
 paths:
   /api/categories:
     get:
+      summary: Get all categories
       responses:
         "200":
           description: List of categories
@@ -16,6 +17,7 @@ paths:
                   $ref: "#/components/schemas/Category"
   /api/attempts/start:
     post:
+      summary: Start a new attempt
       requestBody:
         required: true
         content:
@@ -31,6 +33,7 @@ paths:
                 $ref: "#/components/schemas/Attempt"
   /api/attempts/{attemptId}/question:
     get:
+      summary: Get next question
       parameters:
         - in: path
           name: attemptId
@@ -48,6 +51,7 @@ paths:
           description: No remaining questions (attempt completed)
   /api/attempts/{attemptId}/answer:
     post:
+      summary: Submit answer
       parameters:
         - in: path
           name: attemptId
@@ -69,6 +73,7 @@ paths:
                 $ref: "#/components/schemas/Answer"
   /api/attempts/{attemptId}/result:
     get:
+      summary: Get attempt result
       parameters:
         - in: path
           name: attemptId
@@ -84,6 +89,7 @@ paths:
                 $ref: "#/components/schemas/AttemptResult"
   /api/attempts:
     get:
+      summary: Get all attempts
       responses:
         "200":
           description: Attempt list
@@ -95,6 +101,7 @@ paths:
                   $ref: "#/components/schemas/AttemptSummary"
   /api/attempts/{attemptId}/answers:
     get:
+      summary: Get answer history
       parameters:
         - in: path
           name: attemptId
