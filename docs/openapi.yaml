@@ -31,12 +31,12 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Attempt"
-  /api/attempts/{attemptId}/question:
+  /api/attempts/{attempt_id}/question:
     get:
       summary: Get next question
       parameters:
         - in: path
-          name: attemptId
+          name: attempt_id
           required: true
           schema:
             type: integer
@@ -49,12 +49,12 @@ paths:
                 $ref: "#/components/schemas/NextQuestionResponse"
         "204":
           description: No remaining questions (attempt completed)
-  /api/attempts/{attemptId}/answer:
+  /api/attempts/{attempt_id}/answer:
     post:
       summary: Submit answer
       parameters:
         - in: path
-          name: attemptId
+          name: attempt_id
           required: true
           schema:
             type: integer
@@ -71,12 +71,12 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Answer"
-  /api/attempts/{attemptId}/result:
+  /api/attempts/{attempt_id}/result:
     get:
       summary: Get attempt result
       parameters:
         - in: path
-          name: attemptId
+          name: attempt_id
           required: true
           schema:
             type: integer
@@ -99,12 +99,12 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/AttemptSummary"
-  /api/attempts/{attemptId}/answers:
+  /api/attempts/{attempt_id}/answers:
     get:
       summary: Get answer history
       parameters:
         - in: path
-          name: attemptId
+          name: attempt_id
           required: true
           schema:
             type: integer
