@@ -12,7 +12,7 @@
 
 ### 2.2 挑戦（Attempt）
 - 1つのカテゴリーに対して行う1回のクイズ挑戦
-- `attemptId` が自動採番される
+- `attempt_id` が自動採番される
 - 1つの挑戦内で出題された問題は重複しない
 - 回答状況は `completed_at` で判定（null = 進行中、値あり = 完了）
 
@@ -34,12 +34,12 @@
 
 ### 3.1 クイズ挑戦開始
 ```
-カテゴリーを選択 → 挑戦（Attempt）を作成 → attemptId 取得
+カテゴリーを選択 → 挑戦（Attempt）を作成 → attempt_id 取得
 ```
 
 ### 3.2 問題出題と回答
 ```
-1. attemptId で指定された挑戦の次の問題を取得
+1. attempt_id で指定された挑戦の次の問題を取得
 2. 問題を表示（選択肢を含む）
 3. 選択肢を選び、回答を送信
 4. 回答を保存（正誤判定を含む）
@@ -59,7 +59,7 @@
 
 ### 3.5 挑戦の詳細を参照
 ```
-特定の挑戦（attemptId）の全問題の回答履歴を取得
+特定の挑戦（attempt_id）の全問題の回答履歴を取得
 問題ごとの正誤を確認
 ```
 
@@ -68,7 +68,7 @@
 | # | 機能 | 説明 |
 |---|------|------|
 | 1 | カテゴリー一覧取得 | 利用可能なカテゴリーを取得 |
-| 2 | 挑戦開始 | カテゴリーを指定して挑戦を作成し、attemptId を取得 |
+| 2 | 挑戦開始 | カテゴリーを指定して挑戦を作成し、attempt_id を取得 |
 | 3 | 次の問題取得 | 指定された挑戦内で未回答の問題を取得 |
 | 4 | 回答送信 | 問題に対する回答を送信し、結果を保存 |
 | 5 | 挑戦結果取得 | 指定された挑戦の最終結果を取得 |
@@ -156,7 +156,7 @@ erDiagram
 - `question_id`: 回答した問題
 - `choice_id`: ユーザーが選んだ選択肢
 - `answered_at`: 回答時刻
-    - 正誤判定は `choice_id` で参照する `QUESTION_CHOICE.is_correct` から取得
+
 
 ## 6. API仕様（概要）
 
@@ -165,11 +165,11 @@ erDiagram
 ```
 GET    /api/categories                      # カテゴリー一覧取得
 POST   /api/attempts/start                  # 挑戦開始
-GET    /api/attempts/{attemptId}/question   # 次の問題取得
-POST   /api/attempts/{attemptId}/answer     # 回答送信
-GET    /api/attempts/{attemptId}/result     # 挑戦結果取得
+GET    /api/attempts/{attempt_id}/question   # 次の問題取得
+POST   /api/attempts/{attempt_id}/answer     # 回答送信
+GET    /api/attempts/{attempt_id}/result     # 挑戦結果取得
 GET    /api/attempts                        # 挑戦一覧取得
-GET    /api/attempts/{attemptId}/answers    # 挑戦の回答履歴取得
+GET    /api/attempts/{attempt_id}/answers    # 挑戦の回答履歴取得
 ```
 
 ## 7. ビジネスロジック
