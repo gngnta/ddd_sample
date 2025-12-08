@@ -126,8 +126,6 @@ components:
       properties:
         categoryId:
           type: integer
-        totalQuestions:
-          type: integer
     Attempt:
       type: object
       properties:
