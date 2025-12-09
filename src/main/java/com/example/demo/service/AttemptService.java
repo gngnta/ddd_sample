@@ -3,8 +3,6 @@ package com.example.demo.service;
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -58,27 +56,13 @@ public class AttemptService {
         if (attempt == null) {
             return ResponseEntity.notFound().build();
         }
-
-        Set<Integer> answeredQuestionIds = answerRepository.findByAttemptId(attemptId).stream()
-                .map(AnswerEntity::getQuestionId)
-                .collect(Collectors.toSet());
-
-        List<QuestionEntity> questions = questionRepository.findByCategoryId(attempt.getCategoryId());
-        Optional<QuestionEntity> next = questions.stream()
-                .filter(q -> !answeredQuestionIds.contains(q.getId()))
-                .findFirst();
-
-        if (next.isEmpty()) {
-            // mark completed if not already
-            if (attempt.getCompletedAt() == null) {
-                attempt.setCompletedAt(OffsetDateTime.now());
-                attemptRepository.save(attempt);
-            }
+        QuestionEntity question = questionRepository
+                .findRandomQuestionExcludingAnswered(attemptId, attempt.getCategoryId()).orElse(null);
+        if (question == null) {
             return ResponseEntity.noContent().build();
         }
-
-        QuestionEntity question = next.get();
-        List<QuestionChoiceResponse> choices = questionChoiceRepository.findByQuestionId(question.getId()).stream()
+        List<QuestionChoiceResponse> choices = questionChoiceRepository.findByQuestionId(question.getId())
+                .stream()
                 .map(this::toQuestionChoiceResponse)
                 .toList();
 
@@ -91,7 +75,6 @@ public class AttemptService {
                         .choices(choices)
                         .build())
                 .build();
-
         return ResponseEntity.ok(response);
     }
 
