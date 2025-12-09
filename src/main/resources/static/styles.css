@@ -254,3 +254,25 @@ h1 {
     font-size: 18px;
     padding: 40px;
 }
+
+.button-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.next-button {
+    padding: 15px 40px;
+    background: #667eea;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 20px;
+}
+
+.next-button:hover {
+    background: #5568d3;
+    transform: translateY(-2px);
+}

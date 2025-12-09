@@ -14,15 +14,19 @@
         <div id="categoryScreen" class="screen">
             <h1>クイズカテゴリ選択</h1>
             <div id="categoryList"></div>
-            <button onclick="showHistory()" class="secondary-button">挑戦履歴を見る</button>
+            <div class="button-container">
+                <button onclick="showHistory()" class="secondary-button">挑戦履歴を見る</button>
+            </div>
         </div>
 
         <!-- クイズスタート画面 -->
         <div id="startScreen" class="screen hidden">
             <h1>クイズスタート</h1>
             <div id="startInfo"></div>
-            <button onclick="startQuiz()" class="primary-button">スタート</button>
-            <button onclick="showCategoryScreen()" class="secondary-button">戻る</button>
+            <div class="button-container">
+                <button onclick="startQuiz()" class="primary-button">スタート</button>
+                <button onclick="showCategoryScreen()" class="secondary-button">戻る</button>
+            </div>
         </div>
 
         <!-- クイズ画面 -->
@@ -32,21 +36,29 @@
             <div id="questionText"></div>
             <div id="choices"></div>
             <div id="answerResult" class="hidden"></div>
+            <div id="nextButtonContainer" class="button-container hidden"></div>
+            <div class="button-container">
+                <button onclick="showCategoryScreen()" class="secondary-button">トップに戻る</button>
+            </div>
         </div>
 
         <!-- 結果画面 -->
         <div id="resultScreen" class="screen hidden">
             <h1>結果</h1>
             <div id="resultInfo"></div>
-            <button onclick="showCategoryScreen()" class="primary-button">トップに戻る</button>
-            <button onclick="showAnswerHistory()" class="secondary-button">回答詳細を見る</button>
+            <div class="button-container">
+                <button onclick="showCategoryScreen()" class="primary-button">トップに戻る</button>
+                <button onclick="showAnswerHistory()" class="secondary-button">回答詳細を見る</button>
+            </div>
         </div>
 
         <!-- 挑戦履歴画面 -->
         <div id="historyScreen" class="screen hidden">
             <h1>挑戦履歴</h1>
             <div id="historyList"></div>
-            <button onclick="showCategoryScreen()" class="secondary-button">トップに戻る</button>
+            <div class="button-container">
+                <button onclick="showCategoryScreen()" class="secondary-button">トップに戻る</button>
+            </div>
         </div>
 
         <!-- 挑戦詳細画面 -->
@@ -54,7 +66,9 @@
             <h1>挑戦詳細</h1>
             <div id="detailInfo"></div>
             <div id="answerHistoryList"></div>
-            <button onclick="showHistory()" class="secondary-button">履歴に戻る</button>
+            <div class="button-container">
+                <button onclick="showHistory()" class="secondary-button">履歴に戻る</button>
+            </div>
         </div>
     </div>
 

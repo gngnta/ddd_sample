@@ -109,6 +109,7 @@ function showQuizScreen(data) {
     `).join('');
 
     document.getElementById('answerResult').className = 'hidden';
+    document.getElementById('nextButtonContainer').className = 'button-container hidden';
 }
 
 // 回答送信
@@ -141,14 +142,15 @@ async function submitAnswer(questionId, choiceId) {
             }
         });
 
-        // 2秒後に次の問題へ
-        setTimeout(async () => {
-            if (result.status === 'completed') {
-                await showResult();
-            } else {
-                await loadNextQuestion();
-            }
-        }, 2000);
+        // 次へボタンを表示
+        const nextButtonContainer = document.getElementById('nextButtonContainer');
+        nextButtonContainer.className = 'button-container';
+
+        if (result.status === 'completed') {
+            nextButtonContainer.innerHTML = '<button class="next-button" onclick="showResult()">結果を見る</button>';
+        } else {
+            nextButtonContainer.innerHTML = '<button class="next-button" onclick="loadNextQuestion()">次の問題へ</button>';
+        }
 
     } catch (error) {
         console.error('回答送信エラー:', error);
