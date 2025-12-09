@@ -34,7 +34,7 @@ public class AttemptController {
 
     private final AttemptService attemptService;
 
-    @PostMapping("/start")
+    @PostMapping
     @Operation(summary = "Start a new attempt")
     @ApiResponses({
             @ApiResponse(responseCode = "201", description = "Attempt started")
