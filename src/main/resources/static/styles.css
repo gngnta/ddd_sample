@@ -1,0 +1,256 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.container {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    width: 100%;
+    padding: 40px;
+    min-height: 500px;
+}
+
+.screen {
+    display: block;
+}
+
+.screen.hidden {
+    display: none;
+}
+
+h1 {
+    color: #333;
+    margin-bottom: 30px;
+    text-align: center;
+    font-size: 28px;
+}
+
+.category-card,
+.history-card {
+    background: #f8f9fa;
+    padding: 20px;
+    margin: 15px 0;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.category-card:hover,
+.history-card:hover {
+    background: #e9ecef;
+    border-color: #667eea;
+    transform: translateY(-2px);
+}
+
+.category-card h3,
+.history-card h3 {
+    color: #667eea;
+    margin-bottom: 8px;
+}
+
+.category-card p {
+    color: #666;
+    font-size: 14px;
+}
+
+.choice-button {
+    width: 100%;
+    background: #f8f9fa;
+    border: 2px solid #dee2e6;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    text-align: left;
+    transition: all 0.3s ease;
+}
+
+.choice-button:hover:not(:disabled) {
+    background: #e9ecef;
+    border-color: #667eea;
+}
+
+.choice-button:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.choice-button.correct {
+    background: #d4edda;
+    border-color: #28a745;
+}
+
+.choice-button.incorrect {
+    background: #f8d7da;
+    border-color: #dc3545;
+}
+
+.primary-button,
+.secondary-button {
+    padding: 12px 30px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+    margin: 10px 5px;
+}
+
+.primary-button {
+    background: #667eea;
+    color: white;
+}
+
+.primary-button:hover {
+    background: #5568d3;
+}
+
+.secondary-button {
+    background: #6c757d;
+    color: white;
+}
+
+.secondary-button:hover {
+    background: #5a6268;
+}
+
+#questionText {
+    font-size: 20px;
+    font-weight: 500;
+    margin: 30px 0;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    line-height: 1.6;
+}
+
+#answerResult {
+    margin: 20px 0;
+    padding: 15px;
+    border-radius: 8px;
+    font-weight: 500;
+    text-align: center;
+}
+
+#answerResult.correct {
+    background: #d4edda;
+    color: #155724;
+}
+
+#answerResult.incorrect {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.result-card {
+    background: #f8f9fa;
+    padding: 30px;
+    border-radius: 8px;
+    text-align: center;
+    margin: 20px 0;
+}
+
+.result-card .score {
+    font-size: 48px;
+    font-weight: bold;
+    color: #667eea;
+    margin: 20px 0;
+}
+
+.result-card .status {
+    font-size: 24px;
+    margin: 15px 0;
+}
+
+.result-card .status.passed {
+    color: #28a745;
+}
+
+.result-card .status.failed {
+    color: #dc3545;
+}
+
+.answer-item {
+    background: #f8f9fa;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 8px;
+    border-left: 4px solid #dee2e6;
+}
+
+.answer-item.correct {
+    border-left-color: #28a745;
+}
+
+.answer-item.incorrect {
+    border-left-color: #dc3545;
+}
+
+.answer-item .question {
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+.answer-item .choice {
+    color: #666;
+    font-size: 14px;
+}
+
+.badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+    margin-left: 8px;
+}
+
+.badge.in-progress {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.badge.completed {
+    background: #d4edda;
+    color: #155724;
+}
+
+.badge.passed {
+    background: #d4edda;
+    color: #155724;
+}
+
+.badge.failed {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+#questionInfo {
+    text-align: center;
+    color: #666;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+.loading {
+    text-align: center;
+    color: #667eea;
+    font-size: 18px;
+    padding: 40px;
+}
