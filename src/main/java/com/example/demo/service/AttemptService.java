@@ -83,37 +83,33 @@ public class AttemptService {
         if (attempt == null) {
             return null;
         }
-
         QuestionChoiceEntity choice = questionChoiceRepository.findById(request.getChoiceId()).orElse(null);
-        boolean isCorrect = choice != null && Boolean.TRUE.equals(choice.getIsCorrect());
-
+        if (choice == null) {
+            return null;
+        }
+        Boolean isCorrect = choice.getIsCorrect();
         AnswerEntity answer = AnswerEntity.builder()
                 .attemptId(attemptId)
                 .questionId(request.getQuestionId())
                 .choiceId(request.getChoiceId())
                 .answeredAt(OffsetDateTime.now())
                 .build();
-        AnswerEntity saved = answerRepository.save(answer);
-
+        AnswerEntity savedAnswer = answerRepository.save(answer);
         if (isCorrect) {
-            attempt.setCorrectCount(Optional.ofNullable(attempt.getCorrectCount()).orElse(0) + 1);
+            attempt.setCorrectCount(attempt.getCorrectCount() + 1);
         }
-
-        int answeredCount = answerRepository.findByAttemptId(attemptId).size();
-        if (attempt.getTotalQuestions() != null && attempt.getTotalQuestions() == answeredCount
-                && attempt.getCompletedAt() == null) {
+        int answeredCount = (int) answerRepository.countByAttemptId(attemptId);
+        if (attempt.getTotalQuestions() == answeredCount && attempt.getCompletedAt() == null) {
             attempt.setCompletedAt(OffsetDateTime.now());
         }
-
         attemptRepository.save(attempt);
-
         return AnswerResponse.builder()
-                .id(saved.getId())
+                .id(savedAnswer.getId())
                 .attemptId(attemptId)
                 .questionId(request.getQuestionId())
                 .choiceId(request.getChoiceId())
                 .isCorrect(isCorrect)
-                .answeredAt(saved.getAnsweredAt())
+                .answeredAt(savedAnswer.getAnsweredAt())
                 .status(resolveStatus(attempt))
                 .build();
     }
