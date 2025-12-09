@@ -42,10 +42,9 @@ public class AttemptService {
     private final AnswerRepository answerRepository;
 
     public AttemptStartResponse startAttempt(StartAttemptRequest request) {
-        List<QuestionEntity> questions = questionRepository.findByCategoryId(request.getCategoryId());
         AttemptEntity attempt = AttemptEntity.builder()
                 .categoryId(request.getCategoryId())
-                .totalQuestions(questions.size())
+                .totalQuestions((int) questionRepository.countByCategoryId(request.getCategoryId()))
                 .correctCount(0)
                 .createdAt(OffsetDateTime.now())
                 .completedAt(null)

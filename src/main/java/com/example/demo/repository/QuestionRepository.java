@@ -10,4 +10,6 @@ import com.example.demo.repository.entity.QuestionEntity;
 @Repository
 public interface QuestionRepository extends JpaRepository<QuestionEntity, Integer> {
     List<QuestionEntity> findByCategoryId(Integer categoryId);
+
+    long countByCategoryId(Integer categoryId);
 }
