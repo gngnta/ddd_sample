@@ -8,8 +8,6 @@ spring:
     jpa:
         hibernate:
             ddl-auto: validate
-    jackson:
-        property-naming-strategy: SNAKE_CASE
 springdoc:
     default-consumes-media-type: application/json
     default-produces-media-type: application/json
