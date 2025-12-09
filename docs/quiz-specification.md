@@ -71,9 +71,9 @@
 | 2 | 挑戦開始 | カテゴリーを指定して挑戦を作成し、attempt_id を取得 |
 | 3 | 次の問題取得 | 指定された挑戦内で未回答の問題を取得 |
 | 4 | 回答送信 | 問題に対する回答を送信し、結果を保存 |
-| 5 | 挑戦結果取得 | 指定された挑戦の最終結果を取得 |
-| 6 | 挑戦一覧取得 | すべての挑戦履歴を取得 |
-| 7 | 挑戦詳細取得 | 指定された挑戦のすべての回答履歴を取得 |
+| 5 | 挑戦一覧取得 | すべての挑戦履歴を取得 |
+| 6 | 挑戦詳細取得 | 指定された挑戦の詳細情報を取得 |
+| 7 | 回答履歴取得 | 指定された挑戦のすべての回答履歴を取得 |
 
 ## 5. データモデル
 
@@ -167,8 +167,8 @@ GET    /api/categories                      # カテゴリー一覧取得
 POST   /api/attempts                        # 挑戦開始
 GET    /api/attempts/{attempt_id}/question  # 次の問題取得
 POST   /api/attempts/{attempt_id}/answer    # 回答送信
-GET    /api/attempts/{attempt_id}/result    # 挑戦結果取得
 GET    /api/attempts                        # 挑戦一覧取得
+GET    /api/attempts/{attempt_id}           # 挑戦詳細取得
 GET    /api/attempts/{attempt_id}/answers   # 挑戦の回答履歴取得
 ```
 

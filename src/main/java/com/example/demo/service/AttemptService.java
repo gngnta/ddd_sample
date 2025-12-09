@@ -14,7 +14,6 @@ import com.example.demo.controller.request.SubmitAnswerRequest;
 import com.example.demo.controller.response.AnswerDetailResponse;
 import com.example.demo.controller.response.AnswerResponse;
 import com.example.demo.controller.response.AttemptStartResponse;
-import com.example.demo.controller.response.AttemptResultResponse;
 import com.example.demo.controller.response.AttemptSummaryResponse;
 import com.example.demo.controller.response.NextQuestionResponse;
 import com.example.demo.controller.response.QuestionChoiceResponse;
@@ -136,20 +135,12 @@ public class AttemptService {
                 .build();
     }
 
-    public AttemptResultResponse getResult(Integer attemptId) {
+    public AttemptSummaryResponse getAttempt(Integer attemptId) {
         AttemptEntity attempt = attemptRepository.findById(attemptId).orElse(null);
         if (attempt == null) {
             return null;
         }
-        CategoryEntity category = categoryRepository.findById(attempt.getCategoryId()).orElse(null);
-        return AttemptResultResponse.builder()
-                .attemptId(attemptId)
-                .categoryId(category != null ? category.getId() : null)
-                .categoryName(category != null ? category.getName() : null)
-                .totalQuestions(attempt.getTotalQuestions())
-                .correctCount(attempt.getCorrectCount())
-                .completedAt(attempt.getCompletedAt())
-                .build();
+        return toAttemptSummary(attempt);
     }
 
     public List<AttemptSummaryResponse> listAttemptSummaries() {

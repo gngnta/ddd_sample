@@ -15,7 +15,6 @@ import com.example.demo.controller.request.SubmitAnswerRequest;
 import com.example.demo.controller.response.AnswerDetailResponse;
 import com.example.demo.controller.response.AnswerResponse;
 import com.example.demo.controller.response.AttemptStartResponse;
-import com.example.demo.controller.response.AttemptResultResponse;
 import com.example.demo.controller.response.AttemptSummaryResponse;
 import com.example.demo.controller.response.NextQuestionResponse;
 import com.example.demo.service.AttemptService;
@@ -69,19 +68,6 @@ public class AttemptController {
         return ResponseEntity.status(201).body(response);
     }
 
-    @GetMapping("/{attempt_id}/result")
-    @Operation(summary = "Get attempt result")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Final attempt result")
-    })
-    public ResponseEntity<AttemptResultResponse> getAttemptResult(@PathVariable("attempt_id") Integer attemptId) {
-        AttemptResultResponse response = attemptService.getResult(attemptId);
-        if (response == null) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(response);
-    }
-
     @GetMapping
     @Operation(summary = "Get all attempts")
     @ApiResponses({
@@ -89,6 +75,19 @@ public class AttemptController {
     })
     public List<AttemptSummaryResponse> listAttemptSummaries() {
         return attemptService.listAttemptSummaries();
+    }
+
+    @GetMapping("/{attempt_id}")
+    @Operation(summary = "Get attempt by ID")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Attempt details")
+    })
+    public ResponseEntity<AttemptSummaryResponse> getAttempt(@PathVariable("attempt_id") Integer attemptId) {
+        AttemptSummaryResponse response = attemptService.getAttempt(attemptId);
+        if (response == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{attempt_id}/answers")
