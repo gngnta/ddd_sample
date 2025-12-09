@@ -7,10 +7,13 @@ import lombok.NoArgsConstructor;
 
 import java.time.OffsetDateTime;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Schema(name = "AnswerDetailResponse")
 public class AnswerDetailResponse {
     private Integer answerId;
     private Integer questionId;

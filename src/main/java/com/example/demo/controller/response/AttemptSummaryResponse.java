@@ -7,10 +7,13 @@ import lombok.NoArgsConstructor;
 
 import java.time.OffsetDateTime;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Schema(name = "AttemptSummaryResponse")
 public class AttemptSummaryResponse {
     private Integer id;
     private Integer categoryId;
