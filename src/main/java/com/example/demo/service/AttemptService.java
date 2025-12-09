@@ -132,6 +132,7 @@ public class AttemptService {
                 .choiceId(request.getChoiceId())
                 .isCorrect(isCorrect)
                 .answeredAt(saved.getAnsweredAt())
+                .status(resolveStatus(attempt))
                 .build();
     }
 

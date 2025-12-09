@@ -21,4 +21,5 @@ public class AnswerResponse {
     private Integer choiceId;
     private Boolean isCorrect;
     private OffsetDateTime answeredAt;
+    private String status;
 }
