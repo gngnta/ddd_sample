@@ -23,16 +23,16 @@ import java.time.OffsetDateTime;
 public class AnswerEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @Column(name = "attempt_id")
-    private Long attemptId;
+    private Integer attemptId;
 
     @Column(name = "question_id")
-    private Long questionId;
+    private Integer questionId;
 
     @Column(name = "choice_id")
-    private Long choiceId;
+    private Integer choiceId;
 
     @Column(name = "answered_at")
     private OffsetDateTime answeredAt;

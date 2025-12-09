@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 import com.example.demo.repository.entity.AttemptEntity;
 
 @Repository
-public interface AttemptRepository extends JpaRepository<AttemptEntity, Long> {
+public interface AttemptRepository extends JpaRepository<AttemptEntity, Integer> {
 }

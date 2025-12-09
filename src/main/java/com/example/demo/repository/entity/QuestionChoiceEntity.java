@@ -21,10 +21,10 @@ import lombok.NoArgsConstructor;
 public class QuestionChoiceEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @Column(name = "question_id")
-    private Long questionId;
+    private Integer questionId;
 
     @Column(name = "choice_text")
     private String choiceText;

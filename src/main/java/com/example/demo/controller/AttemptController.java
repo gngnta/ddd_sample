@@ -50,7 +50,7 @@ public class AttemptController {
             @ApiResponse(responseCode = "200", description = "Next question"),
             @ApiResponse(responseCode = "204", description = "No remaining questions (attempt completed)")
     })
-    public ResponseEntity<NextQuestionResponse> getNextQuestion(@PathVariable("attempt_id") Long attemptId) {
+    public ResponseEntity<NextQuestionResponse> getNextQuestion(@PathVariable("attempt_id") Integer attemptId) {
         return attemptService.getNextQuestion(attemptId);
     }
 
@@ -60,7 +60,7 @@ public class AttemptController {
             @ApiResponse(responseCode = "201", description = "Answer stored")
     })
     public ResponseEntity<AnswerResponse> submitAnswer(
-            @PathVariable("attempt_id") Long attemptId,
+            @PathVariable("attempt_id") Integer attemptId,
             @RequestBody SubmitAnswerRequest request) {
         AnswerResponse response = attemptService.submitAnswer(attemptId, request);
         if (response == null) {
@@ -74,7 +74,7 @@ public class AttemptController {
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Final attempt result")
     })
-    public ResponseEntity<AttemptResultResponse> getAttemptResult(@PathVariable("attempt_id") Long attemptId) {
+    public ResponseEntity<AttemptResultResponse> getAttemptResult(@PathVariable("attempt_id") Integer attemptId) {
         AttemptResultResponse response = attemptService.getResult(attemptId);
         if (response == null) {
             return ResponseEntity.notFound().build();
@@ -96,7 +96,7 @@ public class AttemptController {
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Answer history")
     })
-    public List<AnswerDetailResponse> listAnswerDetails(@PathVariable("attempt_id") Long attemptId) {
+    public List<AnswerDetailResponse> listAnswerDetails(@PathVariable("attempt_id") Integer attemptId) {
         return attemptService.getAnswerDetails(attemptId);
     }
 }

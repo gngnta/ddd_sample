@@ -23,10 +23,10 @@ import java.time.OffsetDateTime;
 public class AttemptEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @Column(name = "category_id")
-    private Long categoryId;
+    private Integer categoryId;
 
     @Column(name = "total_questions")
     private Integer totalQuestions;

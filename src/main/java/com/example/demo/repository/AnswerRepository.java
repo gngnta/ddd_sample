@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 import com.example.demo.repository.entity.AnswerEntity;
 
 @Repository
-public interface AnswerRepository extends JpaRepository<AnswerEntity, Long> {
-    List<AnswerEntity> findByAttemptId(Long attemptId);
+public interface AnswerRepository extends JpaRepository<AnswerEntity, Integer> {
+    List<AnswerEntity> findByAttemptId(Integer attemptId);
 }

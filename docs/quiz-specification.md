@@ -89,27 +89,27 @@ erDiagram
     QUESTION_CHOICE ||--o{ ANSWER : ""
 
     CATEGORY {
-        long id PK
+        int id PK
         string name
         string description
     }
 
     QUESTION {
-        long id PK
-        long category_id FK
+        int id PK
+        int category_id FK
         string question_text
     }
 
     QUESTION_CHOICE {
-        long id PK
-        long question_id FK
+        int id PK
+        int question_id FK
         string choice_text
         boolean is_correct
     }
 
     ATTEMPT {
-        long id PK
-        long category_id FK
+        int id PK
+        int category_id FK
         int total_questions
         int correct_count
         timestamp created_at
@@ -117,10 +117,10 @@ erDiagram
     }
 
     ANSWER {
-        long id PK
-        long attempt_id FK
-        long question_id FK
-        long choice_id FK
+        int id PK
+        int attempt_id FK
+        int question_id FK
+        int choice_id FK
         timestamp answered_at
     }
 ```

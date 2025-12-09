@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 import com.example.demo.repository.entity.QuestionChoiceEntity;
 
 @Repository
-public interface QuestionChoiceRepository extends JpaRepository<QuestionChoiceEntity, Long> {
-    List<QuestionChoiceEntity> findByQuestionId(Long questionId);
+public interface QuestionChoiceRepository extends JpaRepository<QuestionChoiceEntity, Integer> {
+    List<QuestionChoiceEntity> findByQuestionId(Integer questionId);
 }
