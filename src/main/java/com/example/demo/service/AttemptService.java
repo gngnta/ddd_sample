@@ -4,7 +4,6 @@ import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.controller.request.StartAttemptRequest;
@@ -16,6 +15,7 @@ import com.example.demo.controller.response.AttemptSummaryResponse;
 import com.example.demo.controller.response.NextQuestionResponse;
 import com.example.demo.controller.response.QuestionChoiceResponse;
 import com.example.demo.controller.response.QuestionResponse;
+import com.example.demo.exception.NotFoundException;
 import com.example.demo.repository.AnswerRepository;
 import com.example.demo.repository.AttemptRepository;
 import com.example.demo.repository.CategoryRepository;
@@ -40,9 +40,13 @@ public class AttemptService {
     private final AnswerRepository answerRepository;
 
     public AttemptStartResponse startAttempt(StartAttemptRequest request) {
+        Integer totalQuestions = (int) questionRepository.countByCategoryId(request.getCategoryId());
+        if (totalQuestions == 0) {
+            throw new NotFoundException("No questions found for the specified category");
+        }
         AttemptEntity attempt = AttemptEntity.builder()
                 .categoryId(request.getCategoryId())
-                .totalQuestions((int) questionRepository.countByCategoryId(request.getCategoryId()))
+                .totalQuestions(totalQuestions)
                 .correctCount(0)
                 .createdAt(OffsetDateTime.now())
                 .completedAt(null)
@@ -51,22 +55,17 @@ public class AttemptService {
         return toAttemptStartResponse(saved);
     }
 
-    public ResponseEntity<NextQuestionResponse> getNextQuestion(Integer attemptId) {
-        AttemptEntity attempt = attemptRepository.findById(attemptId).orElse(null);
-        if (attempt == null) {
-            return ResponseEntity.notFound().build();
-        }
+    public NextQuestionResponse getNextQuestion(Integer attemptId) {
+        AttemptEntity attempt = attemptRepository.findById(attemptId)
+                .orElseThrow(() -> new NotFoundException("Attempt not found: " + attemptId));
         QuestionEntity question = questionRepository
-                .findRandomQuestionExcludingAnswered(attemptId, attempt.getCategoryId()).orElse(null);
-        if (question == null) {
-            return ResponseEntity.noContent().build();
-        }
+                .findRandomQuestionExcludingAnswered(attemptId, attempt.getCategoryId())
+                .orElseThrow(() -> new NotFoundException("No remaining questions for attempt: " + attemptId));
         List<QuestionChoiceResponse> choices = questionChoiceRepository.findByQuestionId(question.getId())
                 .stream()
                 .map(this::toQuestionChoiceResponse)
                 .toList();
-
-        NextQuestionResponse response = NextQuestionResponse.builder()
+        return NextQuestionResponse.builder()
                 .attemptId(attemptId)
                 .question(QuestionResponse.builder()
                         .id(question.getId())
@@ -75,18 +74,13 @@ public class AttemptService {
                         .choices(choices)
                         .build())
                 .build();
-        return ResponseEntity.ok(response);
     }
 
     public AnswerResponse submitAnswer(Integer attemptId, SubmitAnswerRequest request) {
-        AttemptEntity attempt = attemptRepository.findById(attemptId).orElse(null);
-        if (attempt == null) {
-            return null;
-        }
-        QuestionChoiceEntity choice = questionChoiceRepository.findById(request.getChoiceId()).orElse(null);
-        if (choice == null) {
-            return null;
-        }
+        AttemptEntity attempt = attemptRepository.findById(attemptId)
+                .orElseThrow(() -> new NotFoundException("Attempt not found: " + attemptId));
+        QuestionChoiceEntity choice = questionChoiceRepository.findById(request.getChoiceId())
+                .orElseThrow(() -> new NotFoundException("Question choice not found: " + request.getChoiceId()));
         Boolean isCorrect = choice.getIsCorrect();
         AnswerEntity answer = AnswerEntity.builder()
                 .attemptId(attemptId)
@@ -115,11 +109,9 @@ public class AttemptService {
     }
 
     public AttemptSummaryResponse getAttempt(Integer attemptId) {
-        AttemptEntity attempt = attemptRepository.findById(attemptId).orElse(null);
-        if (attempt == null) {
-            return null;
-        }
-        return toAttemptSummary(attempt);
+        return attemptRepository.findById(attemptId)
+                .map(this::toAttemptSummary)
+                .orElseThrow(() -> new NotFoundException("Attempt not found: " + attemptId));
     }
 
     public List<AttemptSummaryResponse> listAttemptSummaries() {
@@ -135,11 +127,12 @@ public class AttemptService {
     }
 
     private AttemptSummaryResponse toAttemptSummary(AttemptEntity attempt) {
-        CategoryEntity category = categoryRepository.findById(attempt.getCategoryId()).orElse(null);
+        CategoryEntity category = categoryRepository.findById(attempt.getCategoryId())
+                .orElseThrow(() -> new NotFoundException("Category not found: " + attempt.getCategoryId()));
         return AttemptSummaryResponse.builder()
                 .id(attempt.getId().intValue())
-                .categoryId(category != null ? category.getId().intValue() : null)
-                .categoryName(category != null ? category.getName() : null)
+                .categoryId(category.getId())
+                .categoryName(category.getName())
                 .totalQuestions(attempt.getTotalQuestions())
                 .correctCount(attempt.getCorrectCount())
                 .status(resolveStatus(attempt))
@@ -151,8 +144,8 @@ public class AttemptService {
 
     private AttemptStartResponse toAttemptStartResponse(AttemptEntity attempt) {
         return AttemptStartResponse.builder()
-                .id(attempt.getId().intValue())
-                .categoryId(attempt.getCategoryId().intValue())
+                .id(attempt.getId())
+                .categoryId(attempt.getCategoryId())
                 .totalQuestions(attempt.getTotalQuestions())
                 .correctCount(attempt.getCorrectCount())
                 .status(resolveStatus(attempt))
@@ -163,23 +156,25 @@ public class AttemptService {
     }
 
     private AnswerDetailResponse toAnswerDetail(AnswerEntity answer) {
-        QuestionEntity question = questionRepository.findById(answer.getQuestionId()).orElse(null);
-        QuestionChoiceEntity choice = questionChoiceRepository.findById(answer.getChoiceId()).orElse(null);
+        QuestionEntity question = questionRepository.findById(answer.getQuestionId())
+                .orElseThrow(() -> new NotFoundException("Question not found: " + answer.getQuestionId()));
+        QuestionChoiceEntity choice = questionChoiceRepository.findById(answer.getChoiceId())
+                .orElseThrow(() -> new NotFoundException("Choice not found: " + answer.getChoiceId()));
         return AnswerDetailResponse.builder()
-                .answerId(answer.getId().intValue())
-                .questionId(question != null ? question.getId().intValue() : null)
-                .questionText(question != null ? question.getQuestionText() : null)
-                .choiceId(choice != null ? choice.getId().intValue() : null)
-                .choiceText(choice != null ? choice.getChoiceText() : null)
-                .isCorrect(choice != null && Boolean.TRUE.equals(choice.getIsCorrect()))
+                .answerId(answer.getId())
+                .questionId(question.getId())
+                .questionText(question.getQuestionText())
+                .choiceId(choice.getId())
+                .choiceText(choice.getChoiceText())
+                .isCorrect(choice.getIsCorrect())
                 .answeredAt(answer.getAnsweredAt())
                 .build();
     }
 
     private QuestionChoiceResponse toQuestionChoiceResponse(QuestionChoiceEntity entity) {
         return QuestionChoiceResponse.builder()
-                .id(entity.getId().intValue())
-                .questionId(entity.getQuestionId().intValue())
+                .id(entity.getId())
+                .questionId(entity.getQuestionId())
                 .choiceText(entity.getChoiceText())
                 .build();
     }

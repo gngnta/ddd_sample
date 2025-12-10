@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -40,17 +41,17 @@ public class AttemptController {
     })
     public ResponseEntity<AttemptStartResponse> startAttempt(@RequestBody StartAttemptRequest request) {
         AttemptStartResponse response = attemptService.startAttempt(request);
-        return ResponseEntity.status(201).body(response);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @GetMapping("/{attempt_id}/question")
     @Operation(summary = "Get next question")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Next question"),
-            @ApiResponse(responseCode = "204", description = "No remaining questions (attempt completed)")
     })
     public ResponseEntity<NextQuestionResponse> getNextQuestion(@PathVariable("attempt_id") Integer attemptId) {
-        return attemptService.getNextQuestion(attemptId);
+        NextQuestionResponse response = attemptService.getNextQuestion(attemptId);
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/{attempt_id}/answer")
@@ -62,10 +63,7 @@ public class AttemptController {
             @PathVariable("attempt_id") Integer attemptId,
             @RequestBody SubmitAnswerRequest request) {
         AnswerResponse response = attemptService.submitAnswer(attemptId, request);
-        if (response == null) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.status(201).body(response);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @GetMapping
@@ -84,9 +82,6 @@ public class AttemptController {
     })
     public ResponseEntity<AttemptSummaryResponse> getAttempt(@PathVariable("attempt_id") Integer attemptId) {
         AttemptSummaryResponse response = attemptService.getAttempt(attemptId);
-        if (response == null) {
-            return ResponseEntity.notFound().build();
-        }
         return ResponseEntity.ok(response);
     }
 
