@@ -164,7 +164,6 @@ public class AttemptService {
         if (attempt == null || attempt.getCreatedAt() == null) {
             return null;
         }
-        OffsetDateTime end = attempt.getCompletedAt() != null ? attempt.getCompletedAt() : OffsetDateTime.now();
-        return Duration.between(attempt.getCreatedAt(), end).getSeconds();
+        return Duration.between(attempt.getCreatedAt(), attempt.getCompletedAt()).getSeconds();
     }
 }
