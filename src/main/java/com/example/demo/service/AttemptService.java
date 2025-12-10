@@ -161,7 +161,7 @@ public class AttemptService {
     }
 
     private Long calculateDurationSeconds(AttemptEntity attempt) {
-        if (attempt == null || attempt.getCreatedAt() == null) {
+        if (attempt == null || attempt.getCreatedAt() == null || attempt.getCompletedAt() == null) {
             return null;
         }
         return Duration.between(attempt.getCreatedAt(), attempt.getCompletedAt()).getSeconds();
