@@ -22,6 +22,7 @@ public class AttemptSummaryResponse {
     private Integer correctCount;
     private String status;
     private Boolean passed;
+    private Long durationSeconds;
     private OffsetDateTime createdAt;
     private OffsetDateTime completedAt;
 }

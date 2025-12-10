@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import java.time.Duration;
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -26,6 +27,7 @@ import com.example.demo.repository.entity.AttemptEntity;
 import com.example.demo.repository.entity.CategoryEntity;
 import com.example.demo.repository.entity.QuestionChoiceEntity;
 import com.example.demo.repository.entity.QuestionEntity;
+import com.example.demo.service.mapper.AttemptMapper;
 
 import lombok.RequiredArgsConstructor;
 
@@ -38,6 +40,7 @@ public class AttemptService {
     private final QuestionRepository questionRepository;
     private final QuestionChoiceRepository questionChoiceRepository;
     private final AnswerRepository answerRepository;
+    private final AttemptMapper attemptMapper;
 
     public AttemptStartResponse startAttempt(StartAttemptRequest request) {
         Integer totalQuestions = (int) questionRepository.countByCategoryId(request.getCategoryId());
@@ -63,7 +66,7 @@ public class AttemptService {
                 .orElseThrow(() -> new NotFoundException("No remaining questions for attempt: " + attemptId));
         List<QuestionChoiceResponse> choices = questionChoiceRepository.findByQuestionId(question.getId())
                 .stream()
-                .map(this::toQuestionChoiceResponse)
+                .map(attemptMapper::toQuestionChoiceResponse)
                 .toList();
         return NextQuestionResponse.builder()
                 .attemptId(attemptId)
@@ -129,30 +132,12 @@ public class AttemptService {
     private AttemptSummaryResponse toAttemptSummary(AttemptEntity attempt) {
         CategoryEntity category = categoryRepository.findById(attempt.getCategoryId())
                 .orElseThrow(() -> new NotFoundException("Category not found: " + attempt.getCategoryId()));
-        return AttemptSummaryResponse.builder()
-                .id(attempt.getId().intValue())
-                .categoryId(category.getId())
-                .categoryName(category.getName())
-                .totalQuestions(attempt.getTotalQuestions())
-                .correctCount(attempt.getCorrectCount())
-                .status(resolveStatus(attempt))
-                .passed(resolvePassed(attempt))
-                .createdAt(attempt.getCreatedAt())
-                .completedAt(attempt.getCompletedAt())
-                .build();
+        return attemptMapper.toAttemptSummary(attempt, category, resolveStatus(attempt), resolvePassed(attempt),
+                calculateDurationSeconds(attempt));
     }
 
     private AttemptStartResponse toAttemptStartResponse(AttemptEntity attempt) {
-        return AttemptStartResponse.builder()
-                .id(attempt.getId())
-                .categoryId(attempt.getCategoryId())
-                .totalQuestions(attempt.getTotalQuestions())
-                .correctCount(attempt.getCorrectCount())
-                .status(resolveStatus(attempt))
-                .passed(resolvePassed(attempt))
-                .createdAt(attempt.getCreatedAt())
-                .completedAt(attempt.getCompletedAt())
-                .build();
+        return attemptMapper.toAttemptStart(attempt, resolveStatus(attempt), resolvePassed(attempt));
     }
 
     private AnswerDetailResponse toAnswerDetail(AnswerEntity answer) {
@@ -160,23 +145,7 @@ public class AttemptService {
                 .orElseThrow(() -> new NotFoundException("Question not found: " + answer.getQuestionId()));
         QuestionChoiceEntity choice = questionChoiceRepository.findById(answer.getChoiceId())
                 .orElseThrow(() -> new NotFoundException("Choice not found: " + answer.getChoiceId()));
-        return AnswerDetailResponse.builder()
-                .answerId(answer.getId())
-                .questionId(question.getId())
-                .questionText(question.getQuestionText())
-                .choiceId(choice.getId())
-                .choiceText(choice.getChoiceText())
-                .isCorrect(choice.getIsCorrect())
-                .answeredAt(answer.getAnsweredAt())
-                .build();
-    }
-
-    private QuestionChoiceResponse toQuestionChoiceResponse(QuestionChoiceEntity entity) {
-        return QuestionChoiceResponse.builder()
-                .id(entity.getId())
-                .questionId(entity.getQuestionId())
-                .choiceText(entity.getChoiceText())
-                .build();
+        return attemptMapper.toAnswerDetail(answer, question, choice);
     }
 
     private String resolveStatus(AttemptEntity attempt) {
@@ -189,5 +158,13 @@ public class AttemptService {
         }
         int correct = Optional.ofNullable(attempt.getCorrectCount()).orElse(0);
         return correct * 2 >= attempt.getTotalQuestions();
+    }
+
+    private Long calculateDurationSeconds(AttemptEntity attempt) {
+        if (attempt == null || attempt.getCreatedAt() == null) {
+            return null;
+        }
+        OffsetDateTime end = attempt.getCompletedAt() != null ? attempt.getCompletedAt() : OffsetDateTime.now();
+        return Duration.between(attempt.getCreatedAt(), end).getSeconds();
     }
 }
