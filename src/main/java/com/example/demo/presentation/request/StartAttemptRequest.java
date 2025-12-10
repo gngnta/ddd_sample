@@ -1,4 +1,4 @@
-package com.example.demo.controller.request;
+package com.example.demo.presentation.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;

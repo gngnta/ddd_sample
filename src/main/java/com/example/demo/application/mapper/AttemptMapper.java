@@ -1,17 +1,17 @@
-package com.example.demo.service.mapper;
+package com.example.demo.application.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-import com.example.demo.controller.response.AnswerDetailResponse;
-import com.example.demo.controller.response.AttemptStartResponse;
-import com.example.demo.controller.response.AttemptSummaryResponse;
-import com.example.demo.controller.response.QuestionChoiceResponse;
-import com.example.demo.repository.entity.AnswerEntity;
-import com.example.demo.repository.entity.AttemptEntity;
-import com.example.demo.repository.entity.CategoryEntity;
-import com.example.demo.repository.entity.QuestionChoiceEntity;
-import com.example.demo.repository.entity.QuestionEntity;
+import com.example.demo.infrastructure.entity.AnswerEntity;
+import com.example.demo.infrastructure.entity.AttemptEntity;
+import com.example.demo.infrastructure.entity.CategoryEntity;
+import com.example.demo.infrastructure.entity.QuestionChoiceEntity;
+import com.example.demo.infrastructure.entity.QuestionEntity;
+import com.example.demo.presentation.response.AnswerDetailResponse;
+import com.example.demo.presentation.response.AttemptStartResponse;
+import com.example.demo.presentation.response.AttemptSummaryResponse;
+import com.example.demo.presentation.response.QuestionChoiceResponse;
 
 @Mapper(componentModel = "spring")
 public interface AttemptMapper {

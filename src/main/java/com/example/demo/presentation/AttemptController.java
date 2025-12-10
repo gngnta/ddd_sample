@@ -1,4 +1,4 @@
-package com.example.demo.controller;
+package com.example.demo.presentation;
 
 import java.util.List;
 
@@ -11,14 +11,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.controller.request.StartAttemptRequest;
-import com.example.demo.controller.request.SubmitAnswerRequest;
-import com.example.demo.controller.response.AnswerDetailResponse;
-import com.example.demo.controller.response.AnswerResponse;
-import com.example.demo.controller.response.AttemptStartResponse;
-import com.example.demo.controller.response.AttemptSummaryResponse;
-import com.example.demo.controller.response.NextQuestionResponse;
-import com.example.demo.service.AttemptService;
+import com.example.demo.application.AttemptService;
+import com.example.demo.presentation.request.StartAttemptRequest;
+import com.example.demo.presentation.request.SubmitAnswerRequest;
+import com.example.demo.presentation.response.AnswerDetailResponse;
+import com.example.demo.presentation.response.AnswerResponse;
+import com.example.demo.presentation.response.AttemptStartResponse;
+import com.example.demo.presentation.response.AttemptSummaryResponse;
+import com.example.demo.presentation.response.NextQuestionResponse;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;

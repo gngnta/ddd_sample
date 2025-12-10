@@ -1,4 +1,4 @@
-package com.example.demo.service;
+package com.example.demo.application;
 
 import java.time.Duration;
 import java.time.OffsetDateTime;
@@ -7,27 +7,27 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.example.demo.controller.request.StartAttemptRequest;
-import com.example.demo.controller.request.SubmitAnswerRequest;
-import com.example.demo.controller.response.AnswerDetailResponse;
-import com.example.demo.controller.response.AnswerResponse;
-import com.example.demo.controller.response.AttemptStartResponse;
-import com.example.demo.controller.response.AttemptSummaryResponse;
-import com.example.demo.controller.response.NextQuestionResponse;
-import com.example.demo.controller.response.QuestionChoiceResponse;
-import com.example.demo.controller.response.QuestionResponse;
+import com.example.demo.application.mapper.AttemptMapper;
 import com.example.demo.exception.NotFoundException;
-import com.example.demo.repository.AnswerRepository;
-import com.example.demo.repository.AttemptRepository;
-import com.example.demo.repository.CategoryRepository;
-import com.example.demo.repository.QuestionChoiceRepository;
-import com.example.demo.repository.QuestionRepository;
-import com.example.demo.repository.entity.AnswerEntity;
-import com.example.demo.repository.entity.AttemptEntity;
-import com.example.demo.repository.entity.CategoryEntity;
-import com.example.demo.repository.entity.QuestionChoiceEntity;
-import com.example.demo.repository.entity.QuestionEntity;
-import com.example.demo.service.mapper.AttemptMapper;
+import com.example.demo.infrastructure.AnswerRepository;
+import com.example.demo.infrastructure.AttemptRepository;
+import com.example.demo.infrastructure.CategoryRepository;
+import com.example.demo.infrastructure.QuestionChoiceRepository;
+import com.example.demo.infrastructure.QuestionRepository;
+import com.example.demo.infrastructure.entity.AnswerEntity;
+import com.example.demo.infrastructure.entity.AttemptEntity;
+import com.example.demo.infrastructure.entity.CategoryEntity;
+import com.example.demo.infrastructure.entity.QuestionChoiceEntity;
+import com.example.demo.infrastructure.entity.QuestionEntity;
+import com.example.demo.presentation.request.StartAttemptRequest;
+import com.example.demo.presentation.request.SubmitAnswerRequest;
+import com.example.demo.presentation.response.AnswerDetailResponse;
+import com.example.demo.presentation.response.AnswerResponse;
+import com.example.demo.presentation.response.AttemptStartResponse;
+import com.example.demo.presentation.response.AttemptSummaryResponse;
+import com.example.demo.presentation.response.NextQuestionResponse;
+import com.example.demo.presentation.response.QuestionChoiceResponse;
+import com.example.demo.presentation.response.QuestionResponse;
 
 import lombok.RequiredArgsConstructor;
 

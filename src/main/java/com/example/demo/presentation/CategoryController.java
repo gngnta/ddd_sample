@@ -1,4 +1,4 @@
-package com.example.demo.controller;
+package com.example.demo.presentation;
 
 import java.util.List;
 
@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.controller.response.CategoryResponse;
-import com.example.demo.service.CategoryService;
+import com.example.demo.application.CategoryService;
+import com.example.demo.presentation.response.CategoryResponse;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;

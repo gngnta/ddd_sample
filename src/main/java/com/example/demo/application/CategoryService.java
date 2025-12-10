@@ -1,12 +1,12 @@
-package com.example.demo.service;
+package com.example.demo.application;
 
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.example.demo.controller.response.CategoryResponse;
-import com.example.demo.repository.CategoryRepository;
-import com.example.demo.service.mapper.CategoryMapper;
+import com.example.demo.application.mapper.CategoryMapper;
+import com.example.demo.infrastructure.CategoryRepository;
+import com.example.demo.presentation.response.CategoryResponse;
 
 import lombok.RequiredArgsConstructor;
 
