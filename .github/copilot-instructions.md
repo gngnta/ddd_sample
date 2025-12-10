@@ -55,10 +55,11 @@
 │       │   └── com
 │       │       └── example
 │       │           └── demo # ベースパッケージ名
-│       │               ├── controller 
+│       │               ├── application
+│       │               ├── domain
 │       │               ├── exception
-│       │               ├── repository
-│       │               ├── service
+│       │               ├── infrastructure
+│       │               ├── presentation
 │       │               └── DemoApplication.java
 │       └── resources
 │           └── application.yml
