@@ -3,6 +3,17 @@ let currentAttemptId = null;
 let currentCategoryId = null;
 let currentCategoryName = null;
 
+function formatDuration(seconds) {
+    if (seconds === null || seconds === undefined) {
+        return '-';
+    }
+    const total = Math.max(0, Math.floor(seconds));
+    const h = String(Math.floor(total / 3600)).padStart(2, '0');
+    const m = String(Math.floor((total % 3600) / 60)).padStart(2, '0');
+    const s = String(total % 60).padStart(2, '0');
+    return `${h}:${m}:${s}`;
+}
+
 // 画面切り替え
 function showScreen(screenId) {
     document.querySelectorAll('.screen').forEach(screen => {
@@ -178,6 +189,7 @@ async function showResult() {
                     ${attempt.passed ? '合格！' : '不合格'}
                 </div>
                 <p>正答率: ${passRate}%</p>
+                <p>経過時間: ${formatDuration(attempt.durationSeconds)}</p>
             </div>
         `;
     } catch (error) {
@@ -208,6 +220,7 @@ async function loadHistory() {
         historyList.innerHTML = attempts.map(attempt => {
             const date = new Date(attempt.createdAt).toLocaleString('ja-JP');
             const score = `${attempt.correctCount || 0}/${attempt.totalQuestions || 0}`;
+            const duration = formatDuration(attempt.durationSeconds);
 
             return `
                 <div class="history-card" onclick="showDetail(${attempt.id})">
@@ -219,6 +232,7 @@ async function loadHistory() {
                     ? `<span class="badge ${attempt.passed ? 'passed' : 'failed'}">${attempt.passed ? '合格' : '不合格'}</span>`
                     : ''}
                     </p>
+                    <p>経過時間: ${duration}</p>
                 </div>
             `;
         }).join('');
@@ -254,6 +268,7 @@ async function loadAnswerHistory() {
 
         const date = new Date(attempt.createdAt).toLocaleString('ja-JP');
         const score = `${attempt.correctCount || 0}/${attempt.totalQuestions || 0}`;
+        const duration = formatDuration(attempt.durationSeconds);
 
         document.getElementById('detailInfo').innerHTML = `
             <div class="result-card">
@@ -265,6 +280,7 @@ async function loadAnswerHistory() {
                 ? `<span class="badge ${attempt.passed ? 'passed' : 'failed'}">${attempt.passed ? '合格' : '不合格'}</span>`
                 : ''}
                 </p>
+                <p>経過時間: ${duration}</p>
             </div>
         `;
 
