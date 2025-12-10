@@ -18,7 +18,6 @@ public interface AttemptMapper {
 
     @Mapping(source = "attempt.id", target = "id")
     @Mapping(source = "category.name", target = "categoryName")
-    @Mapping(source = "durationSeconds", target = "durationSeconds")
     AttemptSummaryResponse toAttemptSummary(AttemptEntity attempt, CategoryEntity category, String status,
             Boolean passed, Long durationSeconds);
 
