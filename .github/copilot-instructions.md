@@ -10,8 +10,8 @@
 ## プロジェクト概要
 
 - 本プロジェクトは、Spring Bootを使用したシンプルなREST APIアプリケーションです。
-- データベースにはPostgreSQLを使用し、Spring Data JPAを利用してデータアクセスを行います。
 - クイズアプリのバックエンドとして機能し、ユーザー管理、クイズ問題の取得、履歴の保存などの機能を提供します。
+- データベースにはPostgreSQLを使用し、Spring Data JPAを利用してデータアクセスを行います。
 
 ## 共通の指示
 
@@ -33,6 +33,7 @@
 │       └── csv # CSVデータ格納用ディレクトリ
 ├── .dockerignore
 ├── docs
+│   └── quiz-specification.md # クイズ仕様書
 ├── .gitattributes
 ├── .github
 │   └── copilot-instructions.md
@@ -49,6 +50,7 @@
 │       │       └── example
 │       │           └── demo # ベースパッケージ名
 │       │               ├── controller 
+│       │               ├── exception
 │       │               ├── repository
 │       │               ├── service
 │       │               └── DemoApplication.java
