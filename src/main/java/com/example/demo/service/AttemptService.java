@@ -129,6 +129,27 @@ public class AttemptService {
                 .toList();
     }
 
+    // Business logic methods
+    private String resolveStatus(AttemptEntity attempt) {
+        return attempt.getCompletedAt() != null ? "completed" : "in_progress";
+    }
+
+    private Boolean resolvePassed(AttemptEntity attempt) {
+        if (attempt.getTotalQuestions() == null || attempt.getTotalQuestions() == 0) {
+            return Boolean.FALSE;
+        }
+        int correct = Optional.ofNullable(attempt.getCorrectCount()).orElse(0);
+        return correct * 2 >= attempt.getTotalQuestions();
+    }
+
+    private Long calculateDurationSeconds(AttemptEntity attempt) {
+        if (attempt == null || attempt.getCreatedAt() == null || attempt.getCompletedAt() == null) {
+            return null;
+        }
+        return Duration.between(attempt.getCreatedAt(), attempt.getCompletedAt()).getSeconds();
+    }
+
+    // Mapping methods
     private AttemptSummaryResponse toAttemptSummary(AttemptEntity attempt) {
         CategoryEntity category = categoryRepository.findById(attempt.getCategoryId())
                 .orElseThrow(() -> new NotFoundException("Category not found: " + attempt.getCategoryId()));
@@ -148,22 +169,4 @@ public class AttemptService {
         return attemptMapper.toAnswerDetail(answer, question, choice);
     }
 
-    private String resolveStatus(AttemptEntity attempt) {
-        return attempt.getCompletedAt() != null ? "completed" : "in_progress";
-    }
-
-    private Boolean resolvePassed(AttemptEntity attempt) {
-        if (attempt.getTotalQuestions() == null || attempt.getTotalQuestions() == 0) {
-            return Boolean.FALSE;
-        }
-        int correct = Optional.ofNullable(attempt.getCorrectCount()).orElse(0);
-        return correct * 2 >= attempt.getTotalQuestions();
-    }
-
-    private Long calculateDurationSeconds(AttemptEntity attempt) {
-        if (attempt == null || attempt.getCreatedAt() == null || attempt.getCompletedAt() == null) {
-            return null;
-        }
-        return Duration.between(attempt.getCreatedAt(), attempt.getCompletedAt()).getSeconds();
-    }
 }
